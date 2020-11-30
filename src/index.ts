@@ -1,2 +1,28 @@
-const jopa = new Array(50).fill('').map(i => 1).map(i => [i, i]).map(i => [i, i]).flatMap(i => i).flatMap(i => i)
-console.log(jopa)
+import El from './lib/El';
+
+const canvas = new El('#chart-root', 'canvas');
+
+function init() {
+  return new Promise((res, rej) => {
+    canvas
+      .create()
+      .then(() => {
+        canvas.mount();
+        res();
+      })
+      .catch(err => rej(err));
+  });
+}
+
+function main() {
+  
+}
+
+window.onload = async () => {
+  try {
+    await init();
+    main();
+  } catch (err) {
+    console.log(err);
+  }
+};
