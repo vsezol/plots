@@ -1,28 +1,36 @@
 import El from './lib/El';
+import App from './App';
 
-const canvas = new El('#chart-root', 'canvas');
-
-function init() {
-  return new Promise((res, rej) => {
-    canvas
-      .create()
-      .then(() => {
-        canvas.mount();
-        res();
-      })
-      .catch(err => rej(err));
-  });
+interface prepareData {
+  canvas: El;
 }
 
-function main() {
-  
+interface initData {
+  canvas: El;
 }
 
-window.onload = async () => {
-  try {
-    await init();
-    main();
-  } catch (err) {
-    console.log(err);
-  }
-};
+const app = new App<prepareData, initData>({
+  prepare: async () => {
+    const canvas = new El('#chart-root', 'canvas');
+    return {
+      canvas,
+    };
+  },
+
+  init: async ({ canvas }) => {
+    try {
+      await canvas.create();
+      canvas.mount();
+    } catch (err) {
+      throw err;
+    } finally {
+      return { canvas };
+    }
+  },
+
+  run: async ({ canvas }) => {
+    return { canvas };
+  },
+});
+
+window.onload = () => app.start();
