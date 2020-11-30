@@ -1,13 +1,10 @@
-export default class El {
-  rootSelector: string;
-  tagName: keyof HTMLElementTagNameMap;
+import { NCanvas } from '../types/Canvas';
 
-  element!: HTMLElement;
-  rootNode!: Element;
-
-  constructor(rootSelector: string, tagName: keyof HTMLElementTagNameMap) {
+export default class Canvas extends NCanvas.AbstractCanvas {
+  constructor({ rootSelector, tag }: NCanvas.IProps) {
+    super();
     this.rootSelector = rootSelector;
-    this.tagName = tagName;
+    this.tag = tag;
   }
 
   create = () =>
@@ -15,7 +12,7 @@ export default class El {
       const rootNode = document.querySelector(this.rootSelector);
       if (!!rootNode) {
         this.rootNode = rootNode;
-        this.element = document.createElement(this.tagName);
+        this.element = document.createElement(this.tag);
         res();
       } else {
         rej(new Error(`rootNode(${this.rootSelector}) is falsy!`));

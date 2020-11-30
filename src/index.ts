@@ -1,17 +1,17 @@
-import El from './lib/El';
+import Canvas from './lib/Canvas';
 import App from './App';
 
 interface prepareData {
-  canvas: El;
+  canvas: Canvas;
 }
 
 interface initData {
-  canvas: El;
+  canvas: Canvas;
 }
 
 const app = new App<prepareData, initData>({
   prepare: async () => {
-    const canvas = new El('#chart-root', 'canvas');
+    const canvas = new Canvas({ rootSelector: '#chart-root', tag: 'canvas' });
     return {
       canvas,
     };
