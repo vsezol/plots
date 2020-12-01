@@ -1,4 +1,5 @@
 import Canvas from './lib/Canvas';
+import Draw from './lib/Draw';
 import App from './App';
 
 interface prepareData {
@@ -6,30 +7,44 @@ interface prepareData {
 }
 
 interface initData {
-  canvas: Canvas;
+  draw: Draw;
 }
 
 const app = new App<prepareData, initData>({
   prepare: async () => {
-    const canvas = new Canvas({ rootSelector: '#chart-root', tag: 'canvas' });
-    return {
-      canvas,
-    };
+    const canvas = new Canvas({ rootSelector: '#chart-root' });
+    await canvas.create();
+    canvas.mount();
+
+    return { canvas };
   },
 
   init: async ({ canvas }) => {
     try {
-      await canvas.create();
-      canvas.mount();
+      const draw = new Draw({ canvas });
+
+      return { draw };
     } catch (err) {
       throw err;
-    } finally {
-      return { canvas };
     }
   },
 
-  run: async ({ canvas }) => {
-    return { canvas };
+  run: async ({ draw }) => {
+    const d = draw.config({
+      lineWidth: 5,
+      lineJoin: 'round',
+      lineCup: 'round',
+      strokeStyle: 'purple',
+    });
+
+    const dataset = new Array(10)
+      .fill('')
+      .map(i => ({ x: Math.random() * 600, y: Math.random() * 400 }));
+
+    dataset.reduce((from, to) => {
+      d.line({from, to});
+      return to;
+    });
   },
 });
 

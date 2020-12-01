@@ -1,10 +1,11 @@
 import { NCanvas } from '../types/Canvas';
 
 export default class Canvas extends NCanvas.AbstractCanvas {
-  constructor({ rootSelector, tag }: NCanvas.IProps) {
+  constructor({ rootSelector, width = 600, height = 400 }: NCanvas.IProps) {
     super();
     this.rootSelector = rootSelector;
-    this.tag = tag;
+    this.width = width;
+    this.height = height;
   }
 
   create = () =>
@@ -12,7 +13,10 @@ export default class Canvas extends NCanvas.AbstractCanvas {
       const rootNode = document.querySelector(this.rootSelector);
       if (!!rootNode) {
         this.rootNode = rootNode;
-        this.element = document.createElement(this.tag);
+        this.element = document.createElement('canvas');
+        this._context = this.element.getContext('2d')!;
+        this.element.setAttribute('width', this.withPx(this.width));
+        this.element.setAttribute('height', this.withPx(this.height));
         res();
       } else {
         rej(new Error(`rootNode(${this.rootSelector}) is falsy!`));
@@ -21,5 +25,13 @@ export default class Canvas extends NCanvas.AbstractCanvas {
 
   mount() {
     this.rootNode.appendChild(this.element);
+  }
+
+  get context() {
+    return this._context;
+  }
+
+  withPx(value: number) {
+    return value + 'px';
   }
 }
