@@ -31,7 +31,7 @@ export default class Canvas extends NCanvas.AbstractCanvas {
     return this._context;
   }
 
-  withPx(value: number) {
+  private withPx(value: number) {
     return value + 'px';
   }
 }

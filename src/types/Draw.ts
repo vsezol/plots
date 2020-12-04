@@ -7,13 +7,24 @@ export namespace NDraw {
     protected ctx!: CanvasRenderingContext2D;
   }
 
-  export interface IConfigProps {
+  export interface IConfigLineProps {
     fillStyle?: string;
     strokeStyle?: string;
     lineWidth?: number;
     lineCup?: CanvasLineCap;
     lineJoin?: CanvasLineJoin;
     lineDash?: number[];
+  }
+
+  export interface IConfigDartProps {
+    fillStyle?: string;
+    radius?: number;
+  }
+
+  export interface IConfigHoleProps {
+    strokeStyle?: string;
+    radius?: number;
+    lineWidth?: number;
   }
 
   export interface ILineProps {
