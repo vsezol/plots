@@ -1,30 +1,12 @@
-import { ArcNamespace, Style, StyleKeys, StyleInner } from './types';
+import Basic from './Basic';
+import { ArcNamespace } from './types';
 
-export default abstract class Arc {
-  protected ctx!: CanvasRenderingContext2D;
+export default class Arc extends Basic {
+  protected _options!: ArcNamespace.Options;
 
-  protected _options: ArcNamespace.Options = {
-    radius: 1,
-  };
-
-  protected _style: Partial<Style> = {};
-
-  constructor({ context, options }: ArcNamespace.ConstructorProps) {
-    this.ctx = context;
+  constructor({ context, options, style }: ArcNamespace.Props) {
+    super({ context, style });
     this.options = options;
-  }
-
-  config(style: Partial<Style> = {}) {
-    this.style = style;
-    return this;
-  }
-
-  set style(style: Partial<Style>) {
-    this._style = style;
-  }
-
-  get style() {
-    return this._style;
   }
 
   set options(options: ArcNamespace.Options) {
@@ -38,26 +20,4 @@ export default abstract class Arc {
   protected arc(x: number, y: number) {
     this.ctx.arc(x, y, this.options.radius!, 0, Math.PI * 2);
   }
-
-  protected applyStyle() {
-    const keys = Object.keys(this.style) as StyleKeys[];
-
-    keys.forEach((key: StyleKeys) => {
-      let property = this.ctx[key];
-      property = this.style[key] as StyleInner;
-    });
-
-    console.log(this.style);
-  }
-
-  protected useStyle = (fn: Function) => () => {
-    this.applyStyle();
-    fn();
-  };
-
-  protected usePath = (fn: Function) => () => {
-    this.ctx.beginPath();
-    fn();
-    this.ctx.closePath();
-  };
 }

@@ -1,18 +1,41 @@
-export namespace MultiDartNamespace {}
+export namespace MultiDotNamespace {
+  export type DotProps = DotNamespace.Props;
 
-export namespace DartNamespace {
-  export interface ConstructorProps extends ArcNamespace.ConstructorProps {}
+  export interface CreateMultiDartProps {
+    options: DotNamespace.Options[];
+    styles: MultiStyle;
+    context: CanvasRenderingContext2D;
+  }
+
+  export type MultiStyleInner = StyleInner[];
+  export type MultiStyle = { [key in StyleKeys]: MultiStyleInner };
+
+  export type MultiOptions = { [key in OptionsKeys]: OptionsInner };
+  export type OptionsInner = DotNamespace.Options[OptionsKeys];
+  export type OptionsKeys = keyof DotNamespace.Options;
+}
+
+export namespace DotNamespace {
+  export interface Props extends ArcNamespace.Props {}
+
+  export interface Options extends ArcNamespace.Options {}
 }
 
 export namespace ArcNamespace {
-  export interface ConstructorProps {
-    context: CanvasRenderingContext2D;
+  export interface Props extends BasicNamespace.Props {
     options: Options;
   }
 
   export interface Options {
     radius: number;
-  }  
+  }
+}
+
+export namespace BasicNamespace {
+  export interface Props {
+    context: CanvasRenderingContext2D;
+    style: Style;
+  }
 }
 
 export interface Point {
@@ -20,16 +43,12 @@ export interface Point {
   y: number;
 }
 
-export type StyleKeys = keyof Style;
-export interface Style extends
-  Partial <
-    Pick <
-      CanvasFillStrokeStyles,
-      'fillStyle' | 'strokeStyle'
-    >
-    & Omit <
-      CanvasPathDrawingStyles,
-      'getLineDash' | 'setLineDash'
-    >
-  > {}
 export type StyleInner = NonNullable<Style[StyleKeys]>;
+
+export type StyleKeys = keyof Style;
+
+export interface Style
+  extends Partial<
+    Pick<CanvasFillStrokeStyles, 'fillStyle' | 'strokeStyle'> &
+      Omit<CanvasPathDrawingStyles, 'getLineDash' | 'setLineDash'>
+  > {}

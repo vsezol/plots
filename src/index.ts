@@ -1,7 +1,6 @@
 import Canvas from './lib/Canvas';
 import App from './App';
-import Dart from './lib/Draw/Dart';
-import Point from 'lib/Draw/Point';
+import { Point, Dart } from './lib/Draw';
 
 interface prepareData {
   canvas: Canvas;
@@ -37,7 +36,16 @@ const app = new App<prepareData, initData>({
       options: {
         radius: 20,
       },
+      style: {
+        fillStyle: 'black',
+      },
     });
+
+    // const doubleDart = createMultiDart({
+    //   styles: [{ fillStyle: 'black' }, { fillStyle: 'white' }],
+    //   options: [{ radius: 10 }, { radius: 5 }],
+    //   context: canvas.context,
+    // });
 
     return { canvas, width, height, dart, dataset };
   },
@@ -45,11 +53,7 @@ const app = new App<prepareData, initData>({
   run: async ({ dart, dataset }) => {
     console.log(dataset);
 
-    const customDart = dart.config({
-      fillStyle: 'black',
-    });
-
-    dataset.forEach(({ x, y }) => customDart.draw({ x, y }));
+    dataset.forEach(({ x, y }) => dart.draw({ x, y }));
   },
 });
 
