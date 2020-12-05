@@ -32,7 +32,12 @@ const app = new App<prepareData, initData>({
       .fill('')
       .map(i => ({ x: Math.random() * width, y: Math.random() * height }));
 
-    const dart = new Dart({ context: canvas.context });
+    const dart = new Dart({
+      context: canvas.context,
+      options: {
+        radius: 20,
+      },
+    });
 
     return { canvas, width, height, dart, dataset };
   },
@@ -40,9 +45,11 @@ const app = new App<prepareData, initData>({
   run: async ({ dart, dataset }) => {
     console.log(dataset);
 
-    const customDart = dart.radius(100).fillStyle('green');
+    const customDart = dart.config({
+      fillStyle: 'black',
+    });
 
-    dataset.forEach(({x, y}) => customDart.draw({x, y}));
+    dataset.forEach(({ x, y }) => customDart.draw({ x, y }));
   },
 });
 

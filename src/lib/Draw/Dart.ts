@@ -1,14 +1,13 @@
 import Arc from './Arc';
-import Point from './Point';
-import { DartNamespace, Style } from './types';
+import { DartNamespace, Style, Point } from './types';
 
 export default class Dart extends Arc {
-  protected style: Style = {
+  protected _style: Style = {
     fillStyle: 'black',
   };
 
-  constructor({ context }: DartNamespace.ConstructorProps) {
-    super({ context });
+  constructor({ context, options }: DartNamespace.ConstructorProps) {
+    super({ context, options });
   }
 
   fillStyle(fillStyle: string) {
@@ -21,7 +20,7 @@ export default class Dart extends Arc {
       this.useStyle(() => {
         this.arc(x, y);
         this.ctx.fill();
-      }),
+      })
     )();
   }
 }
