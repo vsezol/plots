@@ -1,6 +1,10 @@
 import Canvas from './lib/Canvas';
 import App from './App';
-import { Point, Dart } from './lib/Draw';
+import {
+  Point,
+  createDoubleDot,
+  MultiDot,
+} from './lib/Draw';
 
 interface prepareData {
   canvas: Canvas;
@@ -9,8 +13,8 @@ interface prepareData {
 }
 
 interface initData extends prepareData {
-  dart: Dart;
   dataset: Point[];
+  doubleDot: MultiDot;
 }
 
 const app = new App<prepareData, initData>({
@@ -31,29 +35,21 @@ const app = new App<prepareData, initData>({
       .fill('')
       .map(i => ({ x: Math.random() * width, y: Math.random() * height }));
 
-    const dart = new Dart({
+    const doubleDot = createDoubleDot({
+      multiStyle: {
+        fillStyle: ['green', 'red'],
+      },
+      multiOptions: {
+        radius: [10, 5],
+      },
       context: canvas.context,
-      options: {
-        radius: 20,
-      },
-      style: {
-        fillStyle: 'black',
-      },
     });
 
-    // const doubleDart = createMultiDart({
-    //   styles: [{ fillStyle: 'black' }, { fillStyle: 'white' }],
-    //   options: [{ radius: 10 }, { radius: 5 }],
-    //   context: canvas.context,
-    // });
-
-    return { canvas, width, height, dart, dataset };
+    return { canvas, width, height, doubleDot, dataset };
   },
 
-  run: async ({ dart, dataset }) => {
-    console.log(dataset);
-
-    dataset.forEach(({ x, y }) => dart.draw({ x, y }));
+  run: async ({ dataset, doubleDot }) => {
+    dataset.forEach(({ x, y }) => doubleDot.draw({ x, y }));
   },
 });
 

@@ -1,19 +1,12 @@
-import { Point, MultiDotNamespace, StyleKeys } from './types';
+import { Point } from './types';
 import Dot from './Dot';
 
-// дописать функцию создания мультиточек
-// export function createMultiDart(props: MultiDotNamespace.CreateMultiDartProps) {
-//   const styles = Object.keys(props.styles).map((key, index) => [index, []]);
-// }
-
 export default class MultiDot {
-  protected darts: Dot[];
-  constructor(darts: Dot[]) {
-    this.darts = darts;
+  protected dots: Dot[];
+  constructor(dots: Dot[]) {
+    this.dots = dots;
   }
   draw({ x, y }: Point) {
-    this.darts.forEach(({ draw }) => draw({ x, y }));
+    this.dots.forEach(dot => dot.draw({ x, y }));
   }
 }
-
-type DartProps = MultiDotNamespace.DotProps;

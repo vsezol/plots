@@ -1,6 +1,6 @@
-import Dart from './Dot';
-import MultiDart from './MultiDot';
+import Dot from './Dot';
+import MultiDot from './MultiDot';
+export { MultiDot, Dot };
 
 export { Style, StyleInner, StyleKeys, Point } from './types';
-
-export { MultiDart, Dart };
+export { createDoubleDot, createMultiDot } from './createMultiDot';

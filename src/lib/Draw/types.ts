@@ -1,17 +1,21 @@
 export namespace MultiDotNamespace {
   export type DotProps = DotNamespace.Props;
 
-  export interface CreateMultiDartProps {
-    options: DotNamespace.Options[];
-    styles: MultiStyle;
+  export interface CreateDoubleDotProps
+    extends Omit<CreateMultiDotProps, 'count'> {}
+
+  export interface CreateMultiDotProps {
+    multiOptions: MultiOptions;
+    multiStyle: MultiStyle;
     context: CanvasRenderingContext2D;
+    count: number;
   }
 
-  export type MultiStyleInner = StyleInner[];
-  export type MultiStyle = { [key in StyleKeys]: MultiStyleInner };
+  export type MultiStyleInner = NonNullable<StyleInner[]>;
+  export type MultiStyle = { [key in StyleKeys]?: MultiStyleInner };
 
-  export type MultiOptions = { [key in OptionsKeys]: OptionsInner };
-  export type OptionsInner = DotNamespace.Options[OptionsKeys];
+  export type MultiOptions = { [key in OptionsKeys]?: OptionsInner[] };
+  export type OptionsInner = NonNullable<DotNamespace.Options[OptionsKeys]>;
   export type OptionsKeys = keyof DotNamespace.Options;
 }
 
