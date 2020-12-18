@@ -6,9 +6,9 @@ export default class Dot extends Arc {
     super({ context, options, style });
   }
 
-  draw({ x, y }: Point) {
+  draw(point: Point) {
     this.wrapDraw(() => {
-      this.arc(x, y);
+      this.arc(point);
       this.ctx.fill();
     });
   }

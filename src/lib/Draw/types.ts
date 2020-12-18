@@ -1,3 +1,7 @@
+export namespace LineNamespace {
+  export interface Props extends BasicNamespace.Props {}
+}
+
 export namespace MultiDotNamespace {
   export type DotProps = DotNamespace.Props;
 
@@ -55,4 +59,6 @@ export interface Style
   extends Partial<
     Pick<CanvasFillStrokeStyles, 'fillStyle' | 'strokeStyle'> &
       Omit<CanvasPathDrawingStyles, 'getLineDash' | 'setLineDash'>
-  > {}
+  > {
+  setLineDash: number[];
+}

@@ -1,5 +1,5 @@
 import Basic from './Basic';
-import { ArcNamespace } from './types';
+import { ArcNamespace, Point } from './types';
 
 export default class Arc extends Basic {
   protected _options!: ArcNamespace.Options;
@@ -17,7 +17,7 @@ export default class Arc extends Basic {
     return this._options;
   }
 
-  protected arc(x: number, y: number) {
+  protected arc({x, y}: Point) {
     this.ctx.arc(x, y, this.options.radius!, 0, Math.PI * 2);
   }
 }

@@ -4,13 +4,13 @@
     "lib": [ "ESNext", "DOM"],
     "module": "CommonJS",
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
+      "#*": ["./*"],
     },
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["./src/"]
+  "include": ["./src", "./test"]
 }

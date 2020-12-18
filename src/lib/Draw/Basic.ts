@@ -20,8 +20,13 @@ export default abstract class Basic {
   protected applyStyle() {
     const keys = Object.keys(this.style) as StyleKeys[];
     keys.forEach((key: StyleKeys) => {
-      // @ts-ignore
-      this.ctx[key] = this.style[key] as StyleInner;
+      if (typeof this.ctx[key] === 'function') {
+        // @ts-ignore
+        this.ctx[key](this.style[key]);
+      } else {
+        // @ts-ignore
+        this.ctx[key] = this.style[key] as StyleInner;
+      }
     });
   }
 
